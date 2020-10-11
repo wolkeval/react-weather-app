@@ -1,0 +1,8 @@
+.Greeting #greet-city {
+  font-size: 50px;
+  font-weight: 900;
+}
+
+.Greeting #current-date-time {
+  font-size: 18px;
+}

@@ -1,0 +1,43 @@
+.CurrentWeather .current-details .fas {
+  color: #4592af;
+}
+
+.CurrentWeather .current-weather {
+  padding: 20px 0;
+}
+
+.CurrentWeather #current-icon {
+  font-size: 170px;
+  opacity: 70%;
+  transition: all 150ms ease-in-out;
+}
+
+.CurrentWeather #current-icon:hover {
+  opacity: 100%;
+}
+
+.CurrentWeather #current-temperature {
+  font-size: 55px;
+  padding-top: 20px;
+  padding-left: 60px;
+}
+
+.CurrentWeather #description {
+  color: #ffce76;
+  font-size: 23px;
+  font-weight: 300;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+.CurrentWeather li {
+  letter-spacing: 1px;
+  line-height: 30px;
+}
+
+.CurrentWeather ul {
+  font-size: 16px;
+  list-style-type: none;
+  padding: 9% 7%;
+  text-align: left;
+}

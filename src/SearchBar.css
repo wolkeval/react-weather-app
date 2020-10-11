@@ -1,0 +1,18 @@
+.SearchBar {
+  margin: 0 auto;
+  width: 300px;
+}
+
+.SearchBar #city-input {
+  border: 1px solid rgb(17, 17, 17, 0.1);
+  border-radius: 30px;
+  background: #e6dedd;
+  opacity: 50%;
+  text-align: center;
+  transition: all 200ms ease-in-out;
+}
+
+.SearchBar #city-input:hover {
+  border: 1px solid rgb(17, 17, 17, 0.1);
+  opacity: 90%;
+}

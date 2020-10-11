@@ -1,0 +1,28 @@
+.Buttons {
+  float: right;
+}
+
+.Buttons #switch,
+.Buttons #location {
+  background: transparent;
+  border: 2px solid #e6dedd;
+  border-radius: 50%;
+  box-shadow: 5px 5px 20px rgb(17, 17, 17, 0.2);
+  color: #e6dedd;
+  font-size: 25px;
+  opacity: 70%;
+  transition: ease-in-out;
+  height: 60px;
+  width: 60px;
+}
+
+.Buttons #switch:hover,
+.Buttons #location:hover {
+  cursor: pointer;
+  opacity: 90%;
+}
+
+.Buttons #switch:active,
+.Buttons #location:active {
+  transform: translateY(1px);
+}

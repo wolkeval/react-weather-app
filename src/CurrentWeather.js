@@ -8,7 +8,7 @@ export default function CurrentWeather(props) {
       id="current-weather"
     >
       <div className="col col-sm-4 mt-4" id="current-temperature">
-        <span id="current-degrees">{props.currentDegrees}</span>
+        <span id="current-degrees">{Math.round(props.currentDegrees)}</span>
         <span id="units">°</span>
       </div>
       <div className="col col-sm-4">
@@ -20,7 +20,7 @@ export default function CurrentWeather(props) {
         <ul>
           <li>
             <i className="fas fa-thermometer-three-quarters"></i> Feels like:
-            <span id="feels-like"> {props.feelsLike}°</span>
+            <span id="feels-like"> {Math.round(props.feelsLike)}°</span>
           </li>
           <li>
             <i className="fas fa-tint"></i> Humidity:

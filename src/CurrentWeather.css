@@ -13,7 +13,7 @@
 }
 
 .CurrentWeather #current-icon:hover {
-  opacity: 100%;
+  opacity: 1;
 }
 
 .CurrentWeather #current-temperature {

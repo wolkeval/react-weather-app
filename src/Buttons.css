@@ -10,7 +10,7 @@
   box-shadow: 5px 5px 20px rgb(17, 17, 17, 0.2);
   color: #e6dedd;
   font-size: 25px;
-  opacity: 70%;
+  opacity: 0.7;
   transition: ease-in-out;
   height: 60px;
   width: 60px;
@@ -19,7 +19,7 @@
 .Buttons #switch:hover,
 .Buttons #location:hover {
   cursor: pointer;
-  opacity: 90%;
+  opacity: 0.9;
 }
 
 .Buttons #switch:active,

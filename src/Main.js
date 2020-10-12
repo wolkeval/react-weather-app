@@ -6,29 +6,32 @@ import CurrentWeather from "./CurrentWeather";
 import Forecast from "./Forecast";
 
 export default function Main(props) {
-  const [weatherData, setWeatherData] = useState({ ready: false });
+  let units = "metric";
+  let apiKey = "5e57088cf979d1802c908d421701c2db";
+
+  const [weatherData, setWeatherData] = useState({ ready: false }); // API is not loaded by default
 
   function handleResponse(response) {
     setWeatherData({
-      ready: true,
+      ready: true, // API is loaded
       currentCity: response.data.name,
       currentDegrees: response.data.main.temp,
       feelsLike: response.data.main.feels_like,
       humidity: response.data.main.humidity,
+      timezone: response.data.timezone,
       wind: response.data.wind.speed,
       description: response.data.weather[0].description
     }
     )
   }
 
+  // If API is loaded show the current weather, else make an API call
   if (weatherData.ready) {
   return (
     <div className="Main">
       <Greeting
-        greeting="Good morning"
         currentCity={weatherData.currentCity}
-        currentTime="21:21"
-        currentDate="Saturday, 27/09/2020"
+        timezone={weatherData.timezone}
       />
       <CurrentWeather
         currentDegrees={weatherData.currentDegrees}
@@ -41,8 +44,6 @@ export default function Main(props) {
     </div>
   );
   } else {
-    let units = "metric";
-    let apiKey = "5e57088cf979d1802c908d421701c2db";
     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${props.defaultCity}&appid=${apiKey}&units=${units}`
     axios.get(apiUrl).then(handleResponse);
 

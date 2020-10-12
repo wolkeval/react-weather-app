@@ -4,18 +4,19 @@ import "./CurrentWeather.css";
 export default function CurrentWeather(props) {
   return (
     <div
-      className="CurrentWeather row justify-content-center mt-4"
+      className="CurrentWeather row justify-content-center mt-5 mb-5"
       id="current-weather"
     >
-      <div className="col-12 col-sm-4" id="current-temperature">
-        <span id="current-degrees">{props.currentDegrees}</span>°
+      <div className="col col-sm-4 mt-4" id="current-temperature">
+        <span id="current-degrees">{props.currentDegrees}</span>
+        <span id="units">°</span>
       </div>
-      <div className="col-12 col-sm-4">
+      <div className="col col-sm-4">
         <p>
           <i id="current-icon" className="wi wi-owm-day-801"></i>
         </p>
       </div>
-      <div className="col-12 col-sm-4 current-details">
+      <div className="col col-sm-4 current-details">
         <ul>
           <li>
             <i className="fas fa-thermometer-three-quarters"></i> Feels like:

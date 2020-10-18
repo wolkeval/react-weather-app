@@ -14,8 +14,8 @@ export default function Main(props) {
   function handleResponse(response) {
     setWeatherData({
       ready: true, // API is loaded
-      currentCity: response.data.name,
-      currentDegrees: response.data.main.temp,
+      city: response.data.name,
+      temp: response.data.main.temp,
       feelsLike: response.data.main.feels_like,
       humidity: response.data.main.humidity,
       timezone: response.data.timezone,
@@ -30,15 +30,11 @@ export default function Main(props) {
   return (
     <div className="Main">
       <Greeting
-        currentCity={weatherData.currentCity}
+        data={weatherData}
         timezone={weatherData.timezone}
       />
       <CurrentWeather
-        currentDegrees={weatherData.currentDegrees}
-        feelsLike={weatherData.feelsLike}
-        humidity={weatherData.humidity}
-        wind={weatherData.wind}
-        description={weatherData.description}
+        data={weatherData}
       />
       <Forecast />
     </div>

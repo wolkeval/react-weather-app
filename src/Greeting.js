@@ -83,7 +83,7 @@ function formatTime(timestamp) {
   return `${leadingZero(hours)}:${leadingZero(minutes)}`;
 }
 
-let timestamp = getTargetTimestamp(null, props.timezone);
+let timestamp = getTargetTimestamp(null, props.data.timezone);
 let greeting = greetUser(timestamp)
 let date = formatDate(timestamp);
 let time = formatTime(timestamp);
@@ -95,7 +95,7 @@ let time = formatTime(timestamp);
     >
       <div className="col-12" id="greet-city">
         <span id="greeting">{greeting}</span>,{" "}
-        <span id="current-city">{props.currentCity}</span>.
+        <span id="current-city">{props.data.city}</span>.
       </div>
       <div className="col-12" id="current-date-time">
         <span id="current-time">{time}</span>

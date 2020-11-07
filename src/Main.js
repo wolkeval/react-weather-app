@@ -31,7 +31,6 @@ export default function Main(props) {
     <div className="Main">
       <Greeting
         data={weatherData}
-        timezone={weatherData.timezone}
       />
       <CurrentWeather
         data={weatherData}

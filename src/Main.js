@@ -8,16 +8,15 @@ import Greeting from "./Greeting";
 import CurrentWeather from "./CurrentWeather";
 import Forecast from "./Forecast";
 
-import {
-  getTargetTimestamp,
-  formatDate,
-  formatTime,
-} from "./commonFunctions.js";
+import { getTargetTimestamp, formatTime } from "./commonFunctions.js";
 
-export default function Main() {
-  const [city, setCity] = useState("Tokyo");
-  const [weatherData, setWeatherData] = useState({ ready: false }); // API is not loaded by default
-  const [forecastData, setForecastData] = useState({ ready: false });
+export default function Main(props) {
+  let units = "metric";
+  let apiKey = "5e57088cf979d1802c908d421701c2db";
+
+  const [city, setCity] = useState(props.defaultCity);
+  const [weatherData, setWeatherData] = useState({ ready: false }); // Weather API is not loaded by default
+  const [forecastData, setForecastData] = useState({ ready: false }); // Forecast API is not loaded by default
 
   function handleChange(event) {
     setCity(event.target.value);
@@ -25,26 +24,28 @@ export default function Main() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    getCity();
+    getData();
   }
 
   function handleForecastResponse(response) {
-    let degreesList = [];
-    let timeList = [];
-    let iconClassList = [];
+    let forecastDegreesList = [];
+    let forecastTimeList = [];
+    let forecastIconList = [];
 
     for (let i = 0; i < 5; i++) {
+      // Fills forecastDegreesList
       let forecastDegrees = response.data.list[i].main.temp;
-      degreesList.push(Math.round(forecastDegrees));
+      forecastDegreesList.push(Math.round(forecastDegrees));
 
+      // Fills forecastTimeList
       let forecastTimestamp = getTargetTimestamp(
         response.data.list[i].dt,
         response.data.city.timezone
       );
-      timeList.push(formatTime(forecastTimestamp));
+      forecastTimeList.push(formatTime(forecastTimestamp));
 
+      // Fills forecastIconList
       let forecastIconId = response.data.list[i].weather[0].id;
-
       let now = new Date(forecastTimestamp);
       let hours = now.getHours();
       let daytime = "";
@@ -53,20 +54,22 @@ export default function Main() {
       } else {
         daytime = "night";
       }
-      iconClassList.push(
+      forecastIconList.push(
         `forecast-icon wi wi-owm-${daytime}-${forecastIconId}`
       );
     }
 
+    // Changes the state forecastData
     setForecastData({
-      ready: true,
-      degreesList: degreesList,
-      timeList: timeList,
-      iconClassList: iconClassList,
+      ready: true, // API is loaded
+      forecastDegreesList: forecastDegreesList,
+      forecastTimeList: forecastTimeList,
+      forecastIconList: forecastIconList,
     });
   }
 
   function handleWeatherResponse(response) {
+    // Changes the state weatherData
     setWeatherData({
       ready: true, // API is loaded
       city: response.data.name,
@@ -79,13 +82,9 @@ export default function Main() {
     });
   }
 
-  function getCity() {
-    let units = "metric";
-    let apiKey = "5e57088cf979d1802c908d421701c2db";
-
+  function getData() {
     let weatherApi = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
     axios.get(weatherApi).then(handleWeatherResponse);
-
     let forecastApi = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=${units}`;
     axios.get(forecastApi).then(handleForecastResponse);
   }
@@ -96,10 +95,12 @@ export default function Main() {
       <div>
         <div className="Header row justify-content-center mt-4">
           <Logo />
+          {/* Sends functions defined here to SearchBar component */}
           <SearchBar handleSubmit={handleSubmit} handleChange={handleChange} />
           <Buttons />
         </div>
         <div className="Main">
+          {/* Sends API data retrieved here to other components using it */}
           <Greeting data={weatherData} />
           <CurrentWeather data={weatherData} />
           <Forecast data={forecastData} />
@@ -107,7 +108,7 @@ export default function Main() {
       </div>
     );
   } else {
-    getCity();
+    getData();
 
     return "Loading...";
   }

@@ -1,11 +1,11 @@
 import React from "react";
+import "./Greeting.css";
+
 import {
   getTargetTimestamp,
   formatDate,
   formatTime,
 } from "./commonFunctions.js";
-
-import "./Greeting.css";
 
 export default function Greeting(props) {
   function greetUser(timestamp) {

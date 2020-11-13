@@ -13,7 +13,7 @@ export default function CurrentWeather(props) {
       </div>
       <div className="col col-sm-4">
         <p>
-          <i id="current-icon" className="wi wi-owm-day-801"></i>
+          <i id="current-icon" className={props.data.weatherIcon}></i>
         </p>
       </div>
       <div className="col col-sm-4 current-details">

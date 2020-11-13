@@ -99,6 +99,20 @@ export default function Main(props) {
   }
 
   function handleWeatherResponse(response) {
+    let weatherTimestamp = getTargetTimestamp(null, response.data.timezone);
+    let now = new Date(weatherTimestamp);
+    let hours = now.getHours();
+    let daytime = "";
+
+    if (hours >= 5 && hours < 18) {
+      daytime = "day";
+    } else {
+      daytime = "night";
+    }
+
+    let weatherIconId = response.data.weather[0].id;
+    let weatherIcon = `wi wi-owm-${daytime}-${weatherIconId}`;
+
     // Changes the state weatherData
     setWeatherData({
       ready: true, // API is loaded
@@ -109,6 +123,7 @@ export default function Main(props) {
       timezone: response.data.timezone,
       wind: response.data.wind.speed,
       description: response.data.weather[0].description,
+      weatherIcon: weatherIcon,
     });
   }
 

@@ -11,12 +11,36 @@ import Forecast from "./Forecast";
 import { getTargetTimestamp, formatTime } from "./commonFunctions.js";
 
 export default function Main(props) {
-  let units = "metric";
-  let apiKey = "5e57088cf979d1802c908d421701c2db";
-
   const [city, setCity] = useState(props.defaultCity);
   const [weatherData, setWeatherData] = useState({ ready: false }); // Weather API is not loaded by default
   const [forecastData, setForecastData] = useState({ ready: false }); // Forecast API is not loaded by default
+  const [units, setUnits] = useState("metric");
+
+  function toFahrenheit(celsius) {
+    let fahrenheit = Math.round(celsius * (9 / 5) + 32);
+    return fahrenheit;
+  }
+
+  function toCelsius(fahrenheit) {
+    let celsius = Math.round((fahrenheit - 32) / (9 / 5));
+    return celsius;
+  }
+
+  function changeTempUnit() {
+    if (units === "metric") {
+      weatherData.temp = toFahrenheit(weatherData.temp);
+      forecastData.forecastDegreesList = forecastData.forecastDegreesList.map(
+        (celsius) => toFahrenheit(celsius)
+      );
+      setUnits("imperial");
+    } else {
+      weatherData.temp = toCelsius(weatherData.temp);
+      forecastData.forecastDegreesList = forecastData.forecastDegreesList.map(
+        (fahrenheit) => toCelsius(fahrenheit)
+      );
+      setUnits("metric");
+    }
+  }
 
   function handleChange(event) {
     setCity(event.target.value);
@@ -83,6 +107,7 @@ export default function Main(props) {
   }
 
   function getData() {
+    let apiKey = "5e57088cf979d1802c908d421701c2db";
     let weatherApi = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
     axios.get(weatherApi).then(handleWeatherResponse);
     let forecastApi = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=${units}`;
@@ -92,14 +117,14 @@ export default function Main(props) {
   // If API is loaded show the current weather, else make an API call
   if (weatherData.ready && forecastData.ready) {
     return (
-      <div>
-        <div className="Header row justify-content-center mt-4">
+      <div className="Main">
+        <div className="row justify-content-center mt-4">
           <Logo />
           {/* Sends functions defined here to SearchBar component */}
           <SearchBar handleSubmit={handleSubmit} handleChange={handleChange} />
-          <Buttons />
+          <Buttons changeTempUnit={changeTempUnit} />
         </div>
-        <div className="Main">
+        <div>
           {/* Sends API data retrieved here to other components using it */}
           <Greeting data={weatherData} />
           <CurrentWeather data={weatherData} />

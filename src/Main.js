@@ -16,6 +16,7 @@ export default function Main(props) {
   const [forecastData, setForecastData] = useState({ ready: false }); // Forecast API is not loaded by default
   const [units, setUnits] = useState("metric");
 
+  // SWITCH BUTTON ============================================================
   function toFahrenheit(celsius) {
     let fahrenheit = Math.round(celsius * (9 / 5) + 32);
     return fahrenheit;
@@ -42,6 +43,7 @@ export default function Main(props) {
     }
   }
 
+  // SEARCH BAR ===============================================================
   function handleChange(event) {
     setCity(event.target.value);
   }
@@ -51,6 +53,7 @@ export default function Main(props) {
     getData();
   }
 
+  // API =====================================================================
   function handleForecastResponse(response) {
     let forecastDegreesList = [];
     let forecastTimeList = [];
@@ -106,10 +109,16 @@ export default function Main(props) {
     });
   }
 
+  function error(error) {
+    alert(
+      "Sorry, the location you've entered does not exist. Check your entry and try again."
+    );
+  }
+
   function getData() {
     let apiKey = "5e57088cf979d1802c908d421701c2db";
     let weatherApi = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
-    axios.get(weatherApi).then(handleWeatherResponse);
+    axios.get(weatherApi).then(handleWeatherResponse).catch(error);
     let forecastApi = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=${units}`;
     axios.get(forecastApi).then(handleForecastResponse);
   }

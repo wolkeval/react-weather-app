@@ -9,9 +9,9 @@ export default function Buttons(props) {
           className="mr-2"
           type="button"
           id="switch"
-          onClick={props.changeTempUnit}
+          onClick={props.changeTempUnits}
         >
-          <i className="pe-is-w-degree-fahrenheit"></i>
+          <i className={`pe-is-w-degree-${props.buttonIcon}`}></i>
         </button>
         <button className="ml-2" type="button" id="location">
           <i className="fas fa-map-marker-alt"></i>

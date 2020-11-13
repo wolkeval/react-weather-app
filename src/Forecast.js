@@ -3,7 +3,7 @@ import "./Forecast.css";
 
 export default function Forecast(props) {
   let forecastElements = [];
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < props.data.forecastTimeList.length; i++) {
     forecastElements.push(
       <div className="col">
         <p>

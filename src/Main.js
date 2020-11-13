@@ -15,6 +15,7 @@ export default function Main(props) {
   const [weatherData, setWeatherData] = useState({ ready: false }); // Weather API is not loaded by default
   const [forecastData, setForecastData] = useState({ ready: false }); // Forecast API is not loaded by default
   const [units, setUnits] = useState("metric");
+  const [buttonIcon, setButtonIcon] = useState("fahrenheit");
 
   // SWITCH BUTTON ============================================================
   function toFahrenheit(celsius) {
@@ -27,19 +28,21 @@ export default function Main(props) {
     return celsius;
   }
 
-  function changeTempUnit() {
+  function changeTempUnits() {
     if (units === "metric") {
       weatherData.temp = toFahrenheit(weatherData.temp);
       forecastData.forecastDegreesList = forecastData.forecastDegreesList.map(
         (celsius) => toFahrenheit(celsius)
       );
       setUnits("imperial");
+      setButtonIcon("celsius");
     } else {
       weatherData.temp = toCelsius(weatherData.temp);
       forecastData.forecastDegreesList = forecastData.forecastDegreesList.map(
         (fahrenheit) => toCelsius(fahrenheit)
       );
       setUnits("metric");
+      setButtonIcon("fahrenheit");
     }
   }
 
@@ -131,7 +134,11 @@ export default function Main(props) {
           <Logo />
           {/* Sends functions defined here to SearchBar component */}
           <SearchBar handleSubmit={handleSubmit} handleChange={handleChange} />
-          <Buttons changeTempUnit={changeTempUnit} />
+          <Buttons
+            units={units}
+            buttonIcon={buttonIcon}
+            changeTempUnits={changeTempUnits}
+          />
         </div>
         <div>
           {/* Sends API data retrieved here to other components using it */}

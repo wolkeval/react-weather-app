@@ -11,6 +11,8 @@ import Forecast from "./Forecast";
 import { getTargetTimestamp, formatTime } from "./commonFunctions.js";
 
 export default function Main(props) {
+  let apiKey = "5e57088cf979d1802c908d421701c2db";
+
   const [city, setCity] = useState(props.defaultCity);
   const [weatherData, setWeatherData] = useState({ ready: false }); // Weather API is not loaded by default
   const [forecastData, setForecastData] = useState({ ready: false }); // Forecast API is not loaded by default
@@ -46,6 +48,11 @@ export default function Main(props) {
     }
   }
 
+  // LOCATION BUTTON ==========================================================
+  function locateUser() {
+    navigator.geolocation.getCurrentPosition(retrieveByCoordinates);
+  }
+
   // SEARCH BAR ===============================================================
   function handleChange(event) {
     setCity(event.target.value);
@@ -53,7 +60,7 @@ export default function Main(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
-    getData();
+    retrieveByCity();
   }
 
   // API =====================================================================
@@ -133,8 +140,17 @@ export default function Main(props) {
     );
   }
 
-  function getData() {
-    let apiKey = "5e57088cf979d1802c908d421701c2db";
+  function retrieveByCoordinates(position) {
+    let latitude = position.coords.latitude;
+    let longitude = position.coords.longitude;
+
+    let weatherApi = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=${units}`;
+    axios.get(weatherApi).then(handleWeatherResponse).catch(error);
+    let forecastApi = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=${units}`;
+    axios.get(forecastApi).then(handleForecastResponse);
+  }
+
+  function retrieveByCity() {
     let weatherApi = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
     axios.get(weatherApi).then(handleWeatherResponse).catch(error);
     let forecastApi = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=${units}`;
@@ -153,6 +169,7 @@ export default function Main(props) {
             units={units}
             buttonIcon={buttonIcon}
             changeTempUnits={changeTempUnits}
+            locateUser={locateUser}
           />
         </div>
         <div>
@@ -164,7 +181,7 @@ export default function Main(props) {
       </div>
     );
   } else {
-    getData();
+    retrieveByCity();
 
     return "Loading...";
   }

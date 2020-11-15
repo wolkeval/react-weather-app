@@ -13,7 +13,12 @@ export default function Buttons(props) {
         >
           <i className={`pe-is-w-degree-${props.buttonIcon}`}></i>
         </button>
-        <button className="ml-2" type="button" id="location">
+        <button
+          className="ml-2"
+          type="button"
+          id="location"
+          onClick={props.locateUser}
+        >
           <i className="fas fa-map-marker-alt"></i>
         </button>
       </div>

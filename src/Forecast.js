@@ -5,7 +5,7 @@ export default function Forecast(props) {
   let forecastElements = [];
   for (let i = 0; i < props.data.forecastTimeList.length; i++) {
     forecastElements.push(
-      <div className="col">
+      <div key={`forecast${i}`} className="col">
         <p>
           <i className={props.data.forecastIconList[i]}></i>
         </p>
